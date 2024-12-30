@@ -1,23 +1,17 @@
-import TabButton from "@/components/general/tab-button";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
-import {
-  Clock3Icon,
-  CrossIcon,
-  HomeIcon,
-  PlusCircleIcon,
-  SearchIcon,
-} from "lucide-react";
 import React from "react";
-import AllHospitalsTable from "./components/all-hospitals-table";
+import { QueryClient } from "@tanstack/react-query";
+import { getHospitals } from "../apis/hospitals/hospitals.apis";
+import { SearchIcon } from "lucide-react";
+import HospitalList from "./components/hospital-list";
 
-const TABLIST = {
-  ALL_HOSPITALS: "ALL_HOSPITALS",
-  RECENTLY_VISITED: "RECENTLY_VISITED",
-  FAVOURITES: "FAVOURITES",
-};
+export default async function MyHospitalsPage() {
+  const queryClient = new QueryClient();
 
-export default function MyHospitalsPage() {
+  await queryClient.prefetchQuery({
+    queryKey: ["hospitals"],
+    queryFn: () => getHospitals(),
+  });
   return (
     <section className="bg-neutral-50">
       <div className="px-9 py-6">
@@ -36,38 +30,7 @@ export default function MyHospitalsPage() {
         </div>
         {/* END TITLE SECTION */}
 
-        <Tabs className="mt-6" defaultValue={TABLIST.ALL_HOSPITALS}>
-          {/* TODO: Do custom scrollbar */}
-          <div className="overflow-x-auto">
-            <TabsList className="bg-transparent gap-x-3">
-              <TabButton
-                Icon={CrossIcon}
-                notificationCount={0}
-                tab={TABLIST.ALL_HOSPITALS}
-              >
-                All Hospitals
-              </TabButton>
-              <TabButton
-                Icon={Clock3Icon}
-                notificationCount={0}
-                tab={TABLIST.RECENTLY_VISITED}
-              >
-                Recently Visited
-              </TabButton>
-              <TabButton
-                Icon={HomeIcon}
-                notificationCount={0}
-                tab={TABLIST.FAVOURITES}
-              >
-                Favourites
-              </TabButton>
-            </TabsList>
-          </div>
-
-          <TabsContent value={TABLIST.ALL_HOSPITALS}>
-            <AllHospitalsTable />
-          </TabsContent>
-        </Tabs>
+        <HospitalList />
       </div>
     </section>
   );

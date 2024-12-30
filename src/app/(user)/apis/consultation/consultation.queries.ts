@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import {
+  GetConsultationsQueryDto,
+  GetConsultationsResponse,
   GetRecentConsultationsResponse,
   GetUpcomingConsultationResponse,
 } from "./consultation.types";
 import { ApiRequestError } from "@/lib/types";
 import {
+  getConsultations,
   getRecentConsultations,
   getUpcomingConsultation,
 } from "./consultation.apis";
@@ -27,5 +30,15 @@ export const useGetRecentconsultations = () => {
   >({
     queryFn: getRecentConsultations,
     queryKey: ["recent-consultations"],
+  });
+};
+
+export const useGetconsultations = (queryParams?: GetConsultationsQueryDto) => {
+  return useQuery<
+    AxiosResponse<GetConsultationsResponse>,
+    AxiosError<ApiRequestError>
+  >({
+    queryFn: () => getConsultations(queryParams),
+    queryKey: ["consultations", queryParams],
   });
 };

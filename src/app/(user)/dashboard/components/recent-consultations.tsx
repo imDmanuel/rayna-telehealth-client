@@ -2,18 +2,26 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { recentConsultations } from "@/lib/mock-data";
+// import { recentConsultations } from "@/lib/mock-data";
 import { ChevronRight } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 import { useGetRecentconsultations } from "../../apis/consultation/consultation.queries";
 import RecentconsultationsSkeleton from "./skeletons/recent-consultations-skeleton";
+import { getInitials, showApiError } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function RecentConsultations() {
   const recentConsultationsQuery = useGetRecentconsultations();
   const recentConsultationsData = recentConsultationsQuery.data?.data.data;
 
-  return recentConsultationsQuery.isPending ? (
+  if (recentConsultationsQuery.isError) {
+    showApiError(
+      recentConsultationsQuery.error,
+      "Error fetching recent consultations"
+    );
+  }
+
+  return recentConsultationsQuery.isPending || !recentConsultationsData ? (
     <RecentconsultationsSkeleton />
   ) : (
     <Card>
@@ -25,29 +33,39 @@ export default function RecentConsultations() {
         </button>
       </CardHeader>
       <CardContent className="p-0 divide-y">
-        {recentConsultations.map((consultation) => {
+        {recentConsultationsData.map((consultation) => {
           return (
             <div
               key={consultation.id}
               className="flex items-center flex-wrap gap-3 py-5 px-6"
             >
               {/* CONSULTANT IMAGE */}
-              <Image
-                src={consultation.doctor.profileImage}
+              <Avatar>
+                <AvatarImage src={consultation.doctor?.profilePic} alt="Pic" />
+                <AvatarFallback>
+                  {getInitials([
+                    consultation.doctor?.firstName,
+                    consultation.doctor?.lastName,
+                  ])}
+                </AvatarFallback>
+              </Avatar>
+              {/* <Image
+                src={consultation.doctor.profilePic}
                 alt=""
                 width={40}
                 height={40}
                 className="size-10 rounded-full object-cover"
-              />
+              /> */}
               {/* END CONSULTANT IMAGE */}
 
               {/* CONSULTANT DETAILS */}
               <div className="flex-1 min-w-36">
                 <p className="text-sm text-neutral-900 font-medium">
-                  {consultation.doctor.name}
+                  Dr. {consultation.doctor?.firstName}{" "}
+                  {consultation.doctor?.lastName}
                 </p>
                 <p className="text-sm text-neutral-600">
-                  {consultation.doctor.specialty}
+                  {consultation.doctor?.specialty}
                 </p>
               </div>
               {/* END CONSULTANT DETAILS */}

@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import RaynaLogo from "@/images/rayna-logo.svg";
+import RaynaLogoIcon from "@/images/rayna-logo-icon.png";
 import {
   CalendarIcon,
   CrossIcon,
@@ -55,7 +56,7 @@ const sidebarMainLinks: {
   {
     title: "Medical History",
     Icon: FileIcon,
-    href: "/medical-history",
+    href: "#0",
   },
   {
     title: "My Hospitals",
@@ -72,26 +73,37 @@ const sidebarFooterLinks: {
   {
     title: "Settings",
     Icon: SettingsIcon,
-    href: "/settings",
+    href: "#0",
   },
   {
     title: "Help Center",
     Icon: HeadsetIcon,
-    href: "#0",
+    href: "#1",
   },
   {
     title: "Refer family & friends",
     Icon: GiftIcon,
-    href: "#1",
+    href: "#2",
   },
 ];
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
   return (
-    <Sidebar collapsible="icon" className="pb-6">
+    <Sidebar collapsible="icon" className="pt-2 pb-6">
       <SidebarHeader>
-        <Image src={RaynaLogo} alt="Rayna Logo" />
+        <Image
+          src={RaynaLogo}
+          alt="Rayna Logo"
+          className="block group-data-[collapsible=icon]:hidden"
+        />
+        <Image
+          src={RaynaLogoIcon}
+          width={32}
+          height={32}
+          alt="Rayna Logo Icon"
+          className="hidden group-data-[collapsible=icon]:block"
+        />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

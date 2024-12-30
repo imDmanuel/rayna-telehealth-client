@@ -3,7 +3,6 @@
 import {
   BadgeCheck,
   Bell,
-  ChevronsUpDown,
   CreditCard,
   LogOut,
   LogOutIcon,
@@ -26,19 +25,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import DemoProfilePic from "@/images/demo-profile-pic.jpg";
+import { useGetUser } from "../apis/user/user.queries";
+import { getInitials } from "@/lib/utils";
 
 export function SidebarUser() {
   const { isMobile } = useSidebar();
-  const user: {
-    name: string;
-    email: string;
-    avatar: string;
-  } = {
-    name: "David Fayeme",
-    email: "david@rayna.ui",
-    avatar: DemoProfilePic.src,
-  };
+  const userQuery = useGetUser();
+  const userData = userQuery.data?.data.data;
 
   return (
     <SidebarMenu>
@@ -50,12 +43,17 @@ export function SidebarUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarImage src={userData?.profileImage} />
+                <AvatarFallback className="rounded-lg">
+                  {getInitials([userData?.firstName, userData?.lastName]) ??
+                    "CN"}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">
+                  {userData?.firstName} {userData?.lastName}
+                </span>
+                <span className="truncate text-xs">{userData?.auth.email}</span>
               </div>
               <LogOutIcon className="ml-auto" size={20} />
             </SidebarMenuButton>
@@ -69,12 +67,19 @@ export function SidebarUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarImage src={userData?.profileImage} />
+                  <AvatarFallback className="rounded-lg">
+                    {getInitials([userData?.firstName, userData?.lastName]) ??
+                      "CN"}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">
+                    {userData?.firstName} {userData?.lastName}
+                  </span>
+                  <span className="truncate text-xs">
+                    {userData?.auth.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>

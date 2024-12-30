@@ -1,10 +1,17 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { consultations } from "@/lib/mock-data";
+import { Consultation } from "@/lib/types";
+// import { consultations } from "@/lib/mock-data";
+import { dateFns, getInitials } from "@/lib/utils";
 import { MoreVerticalIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-export default function ConsultationTable() {
+export default function ConsultationTable({
+  consultations,
+}: {
+  consultations: Consultation[];
+}) {
   return (
     <div className="my-10 whitespace-nowrap border rounded-lg overflow-x-auto">
       <table className="">
@@ -18,23 +25,37 @@ export default function ConsultationTable() {
         </thead>
         <tbody className="bg-white">
           {consultations.map((consultation) => {
+            const lastConversation =
+              consultation.conversations?.[
+                consultation.conversations.length - 1
+              ];
             return (
               <tr key={consultation.id}>
                 <td>
                   <div className="flex items-center gap-x-3 py-5 px-6">
-                    <Image
+                    <Avatar>
+                      <AvatarImage src={consultation.doctor?.profilePic} />
+                      <AvatarFallback>
+                        {getInitials([
+                          consultation.doctor?.firstName,
+                          consultation.doctor?.lastName,
+                        ])}
+                      </AvatarFallback>
+                    </Avatar>
+                    {/* <Image
                       width={40}
                       height={40}
                       src={consultation.doctor.profileImage}
                       alt=""
                       className="size-10 shrink-0 rounded-full"
-                    />
+                    /> */}
                     <div>
                       <p className="font-medium text-paragraph-md min-w-0 text-neutral-900">
-                        {consultation.doctor.name}
+                        {consultation.doctor?.firstName}{" "}
+                        {consultation.doctor?.lastName}
                       </p>
                       <p className="text-sm text-neutral-600">
-                        {consultation.doctor.specialty}
+                        {consultation.doctor?.specialty}
                       </p>
                     </div>
                   </div>
@@ -43,10 +64,10 @@ export default function ConsultationTable() {
                 <td>
                   <div className="py-5 px-6 min-w-80 whitespace-normal">
                     <p className="text-neutral-700 font-medium text-sm line-clamp-1">
-                      {consultation.conversation.topic}
+                      {consultation.topic}
                     </p>
                     <p className="text-neutral-500 text-sm line-clamp-1">
-                      {consultation.conversation.response}
+                      {lastConversation?.message}
                     </p>
                   </div>
                 </td>
@@ -54,16 +75,22 @@ export default function ConsultationTable() {
                 <td>
                   <div className="py-5 px-6">
                     <p className="text-neutral-700 text-sm font-medium">
-                      {consultation.dateTime.date}
+                      {dateFns.format(
+                        lastConversation?.createdAt ?? new Date(),
+                        "dd MM, yyyy"
+                      )}
                     </p>
                     <p className="text-neutral-500 text-sm">
-                      {consultation.dateTime.time}
+                      {dateFns.format(
+                        lastConversation?.createdAt ?? new Date(),
+                        "h:mm a"
+                      )}
                     </p>
                   </div>
                 </td>
 
                 <td>
-                  <Button variant={"outline"} size={"icon-lg"}>
+                  <Button variant={"outline"} size={"icon-sm"}>
                     <MoreVerticalIcon />
                   </Button>
                 </td>

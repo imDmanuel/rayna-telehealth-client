@@ -1,20 +1,18 @@
-import TabButton from "@/components/general/tab-button";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
-import {
-  Clock9Icon,
-  MessageSquareTextIcon,
-  PlusCircleIcon,
-} from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 import React from "react";
-import ConsultationTable from "./components/consultation-table";
+import { QueryClient } from "@tanstack/react-query";
+import { getConsultations } from "../apis/consultation/consultation.apis";
+import { ConsutationTabs } from "./components/consultation-tabs";
 
-const TABLIST = {
-  ONGOING_CONSULTATIONS: "ONGOING_CONSULTATIONS",
-  CLOSED_CONSULTATIONS: "CLOSED_CONSULTATIONS",
-};
+export default async function ConsultDoctorPage() {
+  const queryClient = new QueryClient();
 
-export default function ConsultDoctorPage() {
+  await queryClient.prefetchQuery({
+    queryKey: ["consultations"],
+    queryFn: () => getConsultations(),
+  });
+
   return (
     <section className="bg-neutral-50">
       <div className="px-9 py-6">
@@ -38,31 +36,7 @@ export default function ConsultDoctorPage() {
         </div>
         {/* END TITLE SECTION */}
 
-        <Tabs className="mt-6" defaultValue={TABLIST.ONGOING_CONSULTATIONS}>
-          {/* TODO: Customize signature */}
-          <div className="overflow-x-auto">
-            <TabsList className="bg-transparent gap-x-3">
-              <TabButton
-                Icon={MessageSquareTextIcon}
-                notificationCount={0}
-                tab={TABLIST.ONGOING_CONSULTATIONS}
-              >
-                Ongoing Consultations
-              </TabButton>
-              <TabButton
-                Icon={Clock9Icon}
-                notificationCount={0}
-                tab={TABLIST.CLOSED_CONSULTATIONS}
-              >
-                Closed Consultations
-              </TabButton>
-            </TabsList>
-          </div>
-
-          <TabsContent value={TABLIST.ONGOING_CONSULTATIONS}>
-            <ConsultationTable />
-          </TabsContent>
-        </Tabs>
+        <ConsutationTabs />
       </div>
     </section>
   );

@@ -13,8 +13,8 @@ export default function HealthMetricCard({
   Icon,
 }: {
   title: string;
-  value: string;
-  unit: string;
+  value?: string;
+  unit?: string;
   change: string;
   status: string;
   Icon: LucideIcon;
@@ -25,11 +25,11 @@ export default function HealthMetricCard({
         <div className="space-y-2">
           <div className="text-neutral-600 text-sm">{title}</div>
           <div className="text-neutral-700">
-            <span className="font-semibold text-xl">{value}</span>{" "}
-            <span className="text-sm">{unit}</span>
+            <span className="font-semibold text-xl">{value ?? "N/A"}</span>{" "}
+            <span className="text-sm">{unit ?? "N/A"}</span>
           </div>
           <div className="flex items-center gap-x-2">
-            <span className="bg-success-50 text-xs text-success-700 px-1 py-0.5 inline-flex items-center rounded-full">
+            <span className="bg-success-50 text-xs text-success-700 px-1 py-0.5 inline-flex items-center gap-x-1 rounded-full">
               <Image src={ChartUpIcon} alt="" className="h-4 inline" />
               <span>{change}</span>
             </span>

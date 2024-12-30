@@ -27,8 +27,8 @@ export default function PatientDetails() {
             {/* BLOOD PRESSURE */}
             <HealthMetricCard
               title={"Blood pressure"}
-              value={userData.bloodPressure.split(" ")[0]}
-              unit={userData.bloodPressure.split(" ")[1]}
+              value={userData.bloodPressure?.split(" ")[0]}
+              unit={userData.bloodPressure?.split(" ")[1]}
               change={"5%"}
               status={"Healthy"}
               Icon={ThermometerIcon}
@@ -38,8 +38,8 @@ export default function PatientDetails() {
             {/* CHOLESTEROL LEVELS */}
             <HealthMetricCard
               title={"Cholesterol levels"}
-              value={userData.cholesterolLevels.split(" ")[0]}
-              unit={userData.cholesterolLevels.split(" ")[1]}
+              value={userData.cholesterolLevels?.split(" ")[0]}
+              unit={userData.cholesterolLevels?.split(" ")[1]}
               change={"5%"}
               status={"Healthy"}
               Icon={BoxIcon}
@@ -49,8 +49,8 @@ export default function PatientDetails() {
             {/* GLUCOSE LEVELS */}
             <HealthMetricCard
               title={"Glucose levels"}
-              value={userData.glucoseLevels.split(" ")[0]}
-              unit={userData.glucoseLevels.split(" ")[1]}
+              value={userData.glucoseLevels?.split(" ")[0]}
+              unit={userData.glucoseLevels?.split(" ")[1]}
               change={"5%"}
               status={"Healthy"}
               Icon={SunIcon}

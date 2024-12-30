@@ -26,6 +26,7 @@ import { getErrorReason, showApiError } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { LoginErrorReasons } from "../apis/auth.types";
 import useAuthStore from "../apis/auth.store";
+import { useQueryState } from "nuqs";
 
 export default function LoginPage() {
   const loginForm = useForm<z.infer<typeof loginFormSchema>>({
@@ -34,12 +35,18 @@ export default function LoginPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
   const authStore = useAuthStore();
+  const [redirectUrl] = useQueryState("redirect_url");
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     try {
       const loginResponse = await login(values);
       localStorage.setItem("accessToken", loginResponse.data.accessToken);
-      router.push("/dashboard");
+      if (redirectUrl) {
+        const decodedUrl = decodeURIComponent(redirectUrl);
+        router.push(decodedUrl);
+      } else {
+        router.push("/dashboard");
+      }
     } catch (e) {
       showApiError(e, "Error occurred while logging in");
       const reason = getErrorReason<LoginErrorReasons>(e);

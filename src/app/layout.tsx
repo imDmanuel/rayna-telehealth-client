@@ -3,11 +3,12 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
 import { Toaster } from "sonner";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({
   display: "swap",
   variable: "--font-inter",
-  subsets: ["latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
@@ -25,9 +26,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
         <ReactQueryProvider>
-          {children}
+          <NuqsAdapter>
+            {children}
 
-          <Toaster richColors />
+            <Toaster richColors />
+          </NuqsAdapter>
         </ReactQueryProvider>
       </body>
     </html>

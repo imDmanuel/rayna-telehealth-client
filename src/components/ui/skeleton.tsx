@@ -7,8 +7,9 @@ function Skeleton({
   return (
     <div
       className={cn(
-        "text-transparent box-decoration-clone",
+        "!text-transparent box-decoration-clone",
         "animate-pulse rounded-md bg-muted",
+        "*:text-transparent",
         className
       )}
       {...props}

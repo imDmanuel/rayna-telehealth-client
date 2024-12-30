@@ -1,20 +1,29 @@
+import StarRating from "@/components/general/star-rating";
 import { Button } from "@/components/ui/button";
 import { hospitals } from "@/lib/mock-data";
+import { Hospital } from "@/lib/types";
 import {
   ChevronsUpDownIcon,
   ListFilterIcon,
   MoreVerticalIcon,
   SearchIcon,
 } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
-export default function AllHospitalsTable() {
+type HospitalTableProps = {
+  title: string;
+  hospitals: Hospital[];
+};
+
+export default function HospitalsTable({
+  title,
+  hospitals,
+}: HospitalTableProps) {
   return (
     <>
       <div className="flex items-center gap-x-5 flex-wrap justify-between mt-10 mb-5">
         <div className="whitespace-nowrap font-semibold text-neutral-900 text-lg">
-          All Visits
+          {title}
         </div>
 
         {/* ACTIONS */}
@@ -32,7 +41,7 @@ export default function AllHospitalsTable() {
 
           <div className="flex items-center ml-auto">
             {/* FILTER */}
-            <Button className="" variant={"ghost"}>
+            <Button className="font-medium" size={"sm"} variant={"ghost"}>
               <ListFilterIcon />
               Filter
             </Button>
@@ -40,7 +49,7 @@ export default function AllHospitalsTable() {
             {/* END FILTER */}
 
             {/* SORT */}
-            <Button variant={"ghost"}>
+            <Button className="font-medium" size={"sm"} variant={"ghost"}>
               <ChevronsUpDownIcon />
               Sort
             </Button>
@@ -98,11 +107,13 @@ export default function AllHospitalsTable() {
                   </td>
 
                   <td>
-                    <div className="py-5 px-6">{hospital.rating}</div>
+                    <div className="py-5 px-6">
+                      <StarRating rating={hospital.ratings} />
+                    </div>
                   </td>
 
                   <td>
-                    <Button variant={"outline"} size={"icon-lg"}>
+                    <Button variant={"outline"} size={"icon-sm"}>
                       <MoreVerticalIcon />
                     </Button>
                   </td>
