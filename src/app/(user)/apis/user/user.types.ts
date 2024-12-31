@@ -1,5 +1,4 @@
 import { ApiRequestResponse, User } from "@/lib/types";
-import { string } from "zod";
 
 export type GetUserResponse = ApiRequestResponse<
   User & { auth: { email: string } }

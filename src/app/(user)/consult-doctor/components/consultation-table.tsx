@@ -4,7 +4,6 @@ import { Consultation } from "@/lib/types";
 // import { consultations } from "@/lib/mock-data";
 import { dateFns, getInitials } from "@/lib/utils";
 import { MoreVerticalIcon } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 export default function ConsultationTable({

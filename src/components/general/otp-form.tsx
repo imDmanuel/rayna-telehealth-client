@@ -74,7 +74,11 @@ export default function OTPForm() {
               <FormItem>
                 <FormLabel>One-Time Password</FormLabel>
                 <FormControl>
-                  <InputOTP maxLength={6} {...field}>
+                  <InputOTP
+                    maxLength={6}
+                    {...field}
+                    accept={REGEXP_ONLY_DIGITS}
+                  >
                     <InputOTPGroup>
                       <InputOTPSlot index={0} />
                     </InputOTPGroup>

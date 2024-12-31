@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { hospitalsNearMe } from "@/lib/mock-data";
 import { MapPinIcon } from "lucide-react";
 import React from "react";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+// import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
 export default function MyAppointmentsPage() {
   return (

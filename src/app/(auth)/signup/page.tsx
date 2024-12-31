@@ -32,6 +32,7 @@ export default function SignupPage() {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const onSubmit = async ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     confirmPassword,
     ...values
   }: z.infer<typeof signupFormSchema>) => {

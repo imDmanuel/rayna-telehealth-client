@@ -3,7 +3,7 @@ export interface ApiRequestError<T = "generic-error"> {
   message: string;
 }
 
-export interface ApiRequestResponse<T extends object, M = {}> {
+export interface ApiRequestResponse<T extends object, M = object> {
   data: T;
   message: string;
   meta: M;

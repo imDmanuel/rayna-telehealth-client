@@ -12,7 +12,10 @@ export default function StarRating({ rating }: StarRatingProps) {
       {Array.from({ length: 5 }).map((_, index) => {
         const isFilled = rating >= index;
         return (
-          <StarFilledIcon className={cn(isFilled && "text-warning-300")} />
+          <StarFilledIcon
+            key={index}
+            className={cn(isFilled && "text-warning-300")}
+          />
         );
       })}
     </div>

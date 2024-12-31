@@ -44,6 +44,7 @@ export default function HospitalList() {
             Icon={CrossIcon}
             notificationCount={hospitalListMeta?.hospitalsCount ?? 0}
             tab={TABLIST.ALL_HOSPITALS}
+            onClick={() => setCurrentTab(TABLIST.ALL_HOSPITALS)}
           >
             All Hospitals
           </TabButton>
@@ -51,6 +52,7 @@ export default function HospitalList() {
             Icon={Clock3Icon}
             notificationCount={0}
             tab={TABLIST.RECENTLY_VISITED}
+            onClick={() => setCurrentTab(TABLIST.RECENTLY_VISITED)}
           >
             Recently Visited
           </TabButton>
@@ -58,6 +60,7 @@ export default function HospitalList() {
             Icon={HomeIcon}
             notificationCount={0}
             tab={TABLIST.FAVOURITES}
+            onClick={() => setCurrentTab(TABLIST.FAVOURITES)}
           >
             Favourites
           </TabButton>

@@ -1,6 +1,5 @@
 import StarRating from "@/components/general/star-rating";
 import { Button } from "@/components/ui/button";
-import { hospitals } from "@/lib/mock-data";
 import { Hospital } from "@/lib/types";
 import {
   ChevronsUpDownIcon,
