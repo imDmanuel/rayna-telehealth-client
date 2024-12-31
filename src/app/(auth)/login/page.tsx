@@ -204,7 +204,7 @@ export default function LoginPage() {
         {/* CREATE ACCOUNT LINK */}
         <p className="text-center mt-7 text-sm">
           Are you new here?{" "}
-          <Link href={"/sign-up"} className="text-primary-600 font-medium">
+          <Link href={"/signup"} className="text-primary-600 font-medium">
             Create Account
           </Link>
         </p>
